@@ -18,4 +18,13 @@ describe("isLeakedToolIntent", () => {
   it("does not flag prose that merely contains a brace mid-sentence", () => {
     expect(isLeakedToolIntent("I think {this} idea is great.")).toBe(false);
   });
+  it("is true for any show*/suggest* call style (new tools)", () => {
+    expect(isLeakedToolIntent('showProjects({ lead: "axiom" })')).toBe(true);
+    expect(isLeakedToolIntent('showSkills({ emphasis: ["ai"] })')).toBe(true);
+    expect(isLeakedToolIntent("suggestDirections([\"a\",\"b\"])")).toBe(true);
+  });
+  it("does not flag prose that merely says show or suggest", () => {
+    expect(isLeakedToolIntent("Let me show you what Ethan built.")).toBe(false);
+    expect(isLeakedToolIntent("I suggest starting with Axiom.")).toBe(false);
+  });
 });

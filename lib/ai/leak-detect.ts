@@ -9,8 +9,8 @@ export function isLeakedToolIntent(text: string): boolean {
   const t = text.trim();
   if (!t) return false;
 
-  // function-call style, e.g. showProject({ ... })
-  if (/\bshowProject\s*\(/.test(t)) return true;
+  // function-call style for any tool, e.g. showProject({...}), showSkills([...]), suggestDirections([...])
+  if (/\b(show|suggest)[A-Z]\w*\s*\(/.test(t)) return true;
 
   // explicit tool/function tags
   if (/<\/?(tool_call|tool|function_call|function)\b/i.test(t)) return true;
