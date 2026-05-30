@@ -1,9 +1,11 @@
 import { streamText, convertToModelMessages, stepCountIs, type UIMessage } from "ai";
-import { openrouter, MODEL_CHAIN } from "@/lib/ai/model";
+import { primaryModel } from "@/lib/ai/model";
 import { composeSystemPrompt } from "@/lib/ai/system-prompt";
 import { buildTools } from "@/lib/ai/tools";
 import { buildModelParams, capMessages } from "@/lib/ai/request";
 import { InMemoryRateLimiter } from "@/lib/protection/rate-limiter";
+import { getVerifier } from "@/lib/protection/verifier";
+import { makeRepairToolCall } from "@/lib/ai/repair";
 import { type PersonaRole } from "@/lib/persona";
 
 export const maxDuration = 30;
@@ -19,6 +21,12 @@ export async function POST(req: Request) {
     });
   }
 
+  const verifyToken = req.headers.get("x-verify-token") ?? "";
+  const verified = await getVerifier().verify(verifyToken);
+  if (!verified.ok) {
+    return new Response("Verification required", { status: 403 });
+  }
+
   const body = (await req.json()) as {
     messages: UIMessage[];
     persona?: { role: PersonaRole; text: string | null };
@@ -29,11 +37,13 @@ export async function POST(req: Request) {
   const modelMessages = await convertToModelMessages(messages);
 
   const result = streamText({
-    model: openrouter()(MODEL_CHAIN[0]),
+    model: primaryModel(),
     system: composeSystemPrompt(persona),
     messages: modelMessages,
     tools: buildTools(),
     stopWhen: stepCountIs(5),
+    experimental_repairToolCall: makeRepairToolCall() as never,
+    onError: ({ error }) => { console.error("[chat] stream error", error); },
     ...buildModelParams(),
   });
 
