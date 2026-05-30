@@ -8,6 +8,7 @@ import {
   getPublicSkills,
   getPublicExperience,
   getPublicEducation,
+  getPublicContact,
 } from "@/content/index";
 import { publicProjectSchema } from "@/content/schema";
 
@@ -70,6 +71,11 @@ export function buildTools() {
       description: "Render Ethan's education (degrees, schools, honors).",
       inputSchema: z.object({}),
       execute: async () => ({ entries: getPublicEducation() }),
+    }),
+    showContact: tool({
+      description: "Render contact info: email, a resume download, and links to Ethan's live project sites.",
+      inputSchema: z.object({}),
+      execute: async () => getPublicContact(),
     }),
   };
 }

@@ -90,3 +90,16 @@ describe("showEducation tool", () => {
     expect(out.entries.map((e) => e.school)).toContain("DePaul University");
   });
 });
+
+describe("showContact tool", () => {
+  it("returns email, resume url, and project links", async () => {
+    const tools = buildTools();
+    const out = (await tools.showContact.execute!(
+      {},
+      { toolCallId: "t", messages: [] },
+    )) as InferToolOutput<Tools["showContact"]>;
+    expect(out.email).toBe("ethan@triska.space");
+    expect(out.resumeUrl).toBe("/ethan-triska-resume.pdf");
+    expect(out.links.map((l) => l.label)).toContain("Axiom");
+  });
+});
