@@ -1,0 +1,46 @@
+:root {
+  --bg: #0e0e0e;
+  --bg-raised: #151515;
+  --border: #2a2a2a;
+  --border-soft: #232323;
+  --text: #d4d4d4;
+  --text-secondary: #888888;
+  --text-tertiary: #666666;
+
+  /* role tints (also the only component accents) */
+  --tint-recruiter: #93a3f8;
+  --tint-hiring: #b0a8f0;
+  --tint-engineer: #88c9a1;
+  --tint-founder: #d8b783;
+  --tint-friend: #d49bb4;
+  --tint-curious: #8fc6cf;
+
+  --onair: var(--tint-engineer);
+
+  /* the active persona tint; defaults to recruiter lavender, set by JS */
+  --ink: var(--tint-recruiter);
+
+  --max-col: 640px;
+  --pad-x: 24px;
+  --leading-prose: 1.7;
+}
+
+* { box-sizing: border-box; }
+html { background: var(--bg); }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+::selection { background: rgba(147, 163, 248, 0.3); }
+
+/* Compose: a block arrives, then its lines write themselves in. */
+@keyframes panelIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes lineIn  { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: translateY(0); } }
+
+@media (prefers-reduced-motion: reduce) {
+  /* motion utilities must check this; see Composed.tsx */
+}
