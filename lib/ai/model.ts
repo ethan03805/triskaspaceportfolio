@@ -27,3 +27,16 @@ export const MODEL_CHAIN = [
 export function openrouter() {
   return createOpenRouter({ apiKey: process.env.OPENROUTER_API_KEY ?? "" });
 }
+
+/**
+ * OpenRouter chat settings that enable server-side model fallback:
+ * OpenRouter tries each slug in `models` in order, falling back on error/unavailability.
+ */
+export function modelSettings(): { models: string[] } {
+  return { models: [...MODEL_CHAIN] };
+}
+
+/** The model to use for chat: primary slug + the full chain as OpenRouter fallback routing. */
+export function primaryModel() {
+  return openrouter()(MODEL_CHAIN[0], modelSettings());
+}
