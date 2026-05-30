@@ -79,3 +79,14 @@ describe("showExperience tool", () => {
     expect(out.emphasis).toEqual(["aerospace"]);
   });
 });
+
+describe("showEducation tool", () => {
+  it("returns education entries", async () => {
+    const tools = buildTools();
+    const out = (await tools.showEducation.execute!(
+      {},
+      { toolCallId: "t", messages: [] },
+    )) as InferToolOutput<Tools["showEducation"]>;
+    expect(out.entries.map((e) => e.school)).toContain("DePaul University");
+  });
+});

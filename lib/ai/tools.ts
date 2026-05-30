@@ -7,6 +7,7 @@ import {
   getGatedPublicProjects,
   getPublicSkills,
   getPublicExperience,
+  getPublicEducation,
 } from "@/content/index";
 import { publicProjectSchema } from "@/content/schema";
 
@@ -64,6 +65,11 @@ export function buildTools() {
         emphasis: z.array(z.string()).default([]).describe("keywords/ids to highlight"),
       }),
       execute: async ({ emphasis }) => ({ entries: getPublicExperience(), emphasis }),
+    }),
+    showEducation: tool({
+      description: "Render Ethan's education (degrees, schools, honors).",
+      inputSchema: z.object({}),
+      execute: async () => ({ entries: getPublicEducation() }),
     }),
   };
 }

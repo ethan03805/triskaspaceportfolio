@@ -1,0 +1,4 @@
+.wrap { margin: 14px 0; }
+.entry { padding: 9px 0; }
+.degree { font-size: 13.5px; color: var(--text); }
+.meta { font-family: var(--font-mono), monospace; font-size: 11px; color: var(--text-tertiary); margin-top: 4px; }
