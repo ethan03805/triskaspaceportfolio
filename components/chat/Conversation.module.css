@@ -1,0 +1,4 @@
+.conversation { padding: 24px 0 40px; }
+.user { color: var(--text-tertiary); font-size: 12px; font-family: var(--font-mono), monospace; margin: 16px 0 4px; }
+.assistant { color: var(--text-secondary); font-size: 14px; line-height: var(--leading-prose); }
+.liberation { margin-top: 22px; border-top: 1px solid var(--border-soft); padding-top: 18px; }
