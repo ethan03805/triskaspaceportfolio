@@ -6,6 +6,7 @@ import {
   getFeaturedPublicProjects,
   getGatedPublicProjects,
   getPublicSkills,
+  getPublicExperience,
 } from "@/content/index";
 import { publicProjectSchema } from "@/content/schema";
 
@@ -55,6 +56,14 @@ export function buildTools() {
         emphasis: z.array(z.string()).default([]).describe("keywords/ids to highlight, e.g. ai, data"),
       }),
       execute: async ({ emphasis }) => ({ groups: getPublicSkills(), emphasis }),
+    }),
+    showExperience: tool({
+      description:
+        "Render Ethan's work experience. Pass `emphasis` (keywords, org names, or ids) to highlight the most relevant roles; the rest recede.",
+      inputSchema: z.object({
+        emphasis: z.array(z.string()).default([]).describe("keywords/ids to highlight"),
+      }),
+      execute: async ({ emphasis }) => ({ entries: getPublicExperience(), emphasis }),
     }),
   };
 }

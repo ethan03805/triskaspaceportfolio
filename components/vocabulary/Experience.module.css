@@ -1,0 +1,8 @@
+.wrap { margin: 14px 0; }
+.entry { padding: 12px 0; border-bottom: 1px solid var(--border-soft); }
+.role { font-size: 13.5px; color: var(--text); }
+.off .role { color: var(--text-secondary); }
+.meta { font-family: var(--font-mono), monospace; font-size: 11px; color: var(--text-tertiary); margin-top: 4px; }
+.bullets { margin: 8px 0 0; padding-left: 18px; }
+.bullets li { font-size: 13px; color: var(--text-secondary); line-height: var(--leading-prose); }
+.off .bullets li { color: var(--text-tertiary); }

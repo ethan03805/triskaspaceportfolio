@@ -67,3 +67,15 @@ describe("showSkills tool", () => {
     expect(out.emphasis).toEqual(["ai"]);
   });
 });
+
+describe("showExperience tool", () => {
+  it("returns experience entries and passes emphasis through", async () => {
+    const tools = buildTools();
+    const out = (await tools.showExperience.execute!(
+      { emphasis: ["aerospace"] },
+      { toolCallId: "t", messages: [] },
+    )) as InferToolOutput<Tools["showExperience"]>;
+    expect(out.entries.map((e) => e.id)).toContain("ng");
+    expect(out.emphasis).toEqual(["aerospace"]);
+  });
+});
