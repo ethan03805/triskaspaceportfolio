@@ -77,6 +77,16 @@ export function buildTools() {
       inputSchema: z.object({}),
       execute: async () => getPublicContact(),
     }),
+    suggestDirections: tool({
+      description:
+        "Propose 2 to 3 short next directions for the visitor, tailored to them and to what was already asked. Call this at the end of most turns.",
+      inputSchema: z.object({
+        directions: z.array(z.string()).min(1).describe("2 to 3 short prompts the visitor might tap"),
+      }),
+      execute: async ({ directions }) => ({
+        directions: directions.map((d) => d.trim()).filter(Boolean).slice(0, 3),
+      }),
+    }),
   };
 }
 export type Tools = ReturnType<typeof buildTools>;

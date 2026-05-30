@@ -103,3 +103,14 @@ describe("showContact tool", () => {
     expect(out.links.map((l) => l.label)).toContain("Axiom");
   });
 });
+
+describe("suggestDirections tool", () => {
+  it("trims, drops blanks, and caps to three directions", async () => {
+    const tools = buildTools();
+    const out = (await tools.suggestDirections.execute!(
+      { directions: ["  tell me about Axiom  ", "", "show his skills", "experience", "education"] },
+      { toolCallId: "t", messages: [] },
+    )) as InferToolOutput<Tools["suggestDirections"]>;
+    expect(out.directions).toEqual(["tell me about Axiom", "show his skills", "experience"]);
+  });
+});
