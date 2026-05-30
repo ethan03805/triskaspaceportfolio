@@ -42,7 +42,7 @@ export async function POST(req: Request) {
     messages: modelMessages,
     tools: buildTools(),
     stopWhen: stepCountIs(5),
-    experimental_repairToolCall: makeRepairToolCall() as never,
+    experimental_repairToolCall: makeRepairToolCall(),
     onError: ({ error }) => { console.error("[chat] stream error", error); },
     ...buildModelParams(),
   });

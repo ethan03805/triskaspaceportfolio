@@ -1,5 +1,5 @@
 import "server-only";
-import { type ToolCallRepairFunction } from "ai";
+import { type ToolCallRepairFunction, type ToolSet } from "ai";
 
 export type RepairedShowProjectArgs = { id: string; emphasis: string[] };
 
@@ -41,12 +41,12 @@ export function repairShowProjectArgs(raw: unknown): RepairedShowProjectArgs | n
  * and the function must return the full tool-call object with `input` rewritten to a
  * valid stringified payload, or `null` to leave the failure unrepaired.
  */
-export function makeRepairToolCall(): ToolCallRepairFunction<never> {
-  const fn: ToolCallRepairFunction<never> = async ({ toolCall }) => {
+export function makeRepairToolCall<T extends ToolSet>(): ToolCallRepairFunction<T> {
+  const fn = (async ({ toolCall }) => {
     if (toolCall.toolName !== "showProject") return null;
     const repaired = repairShowProjectArgs(toolCall.input);
     if (!repaired) return null;
     return { ...toolCall, input: JSON.stringify(repaired) };
-  };
+  }) as ToolCallRepairFunction<T>;
   return fn;
 }
