@@ -5,7 +5,6 @@ import { DefaultChatTransport } from "ai";
 import { Conversation } from "./Conversation";
 import { type Declaration } from "@/components/entry/Entry";
 import { TINTS } from "@/lib/persona";
-import { type TranscriptMessage } from "@/lib/chat/transcript";
 
 export function Chat() {
   const [persona, setPersona] = useState<Declaration | null>(null);
