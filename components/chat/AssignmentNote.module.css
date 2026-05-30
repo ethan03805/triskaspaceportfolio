@@ -1,0 +1,5 @@
+.note { margin: 8px 0 20px; }
+.echo { font-size: 13px; color: var(--text-secondary); font-style: italic; line-height: var(--leading-prose); }
+.echo::before { content: "\201C"; }
+.echo::after { content: "\201D"; }
+.reading { font-family: var(--font-mono), monospace; font-size: 11px; color: var(--ink); margin-top: 6px; letter-spacing: 0.03em; }
