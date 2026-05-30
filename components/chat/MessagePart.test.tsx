@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { MessagePart } from "./MessagePart";
 
 const project = {
@@ -39,11 +39,11 @@ describe("MessagePart", () => {
     render(<MessagePart part={{ type: "tool-showSkills", state: "output-available", output: { groups: [{ id: "ai-ml", label: "AI / ML", items: ["NLP"], audienceTags: ["ai"] }], emphasis: [] } }} />);
     expect(screen.getByText("AI / ML")).toBeInTheDocument();
   });
-  it("renders directions for tool-suggestDirections and forwards onPick", () => {
-    const onPick = vi.fn();
-    render(<MessagePart onPick={onPick} part={{ type: "tool-suggestDirections", state: "output-available", output: { directions: ["show his skills"] } }} />);
-    fireEvent.click(screen.getByText("[ show his skills ]"));
-    expect(onPick).toHaveBeenCalledWith("show his skills");
+  it("does not render suggested directions inline (they are hoisted below the input)", () => {
+    const { container } = render(
+      <MessagePart part={{ type: "tool-suggestDirections", state: "output-available", output: { directions: ["x"] } }} />,
+    );
+    expect(container).toBeEmptyDOMElement();
   });
   it("shows a skeleton for any tool input state", () => {
     render(<MessagePart part={{ type: "tool-showExperience", state: "input-available" }} />);

@@ -30,11 +30,7 @@ export function Chat() {
       {messages.map((m) => (
         <div key={m.id} className={m.role === "user" ? styles.user : styles.assistant}>
           {m.parts.map((part, i) => (
-            <MessagePart
-              key={i}
-              part={part as never}
-              onPick={(text) => sendMessage({ text }, { body: { persona } })}
-            />
+            <MessagePart key={i} part={part as never} />
           ))}
         </div>
       ))}
