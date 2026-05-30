@@ -5,6 +5,7 @@ import {
   getPublicProjectById,
   getFeaturedPublicProjects,
   getGatedPublicProjects,
+  getPublicSkills,
 } from "@/content/index";
 import { publicProjectSchema } from "@/content/schema";
 
@@ -46,6 +47,14 @@ export function buildTools() {
           emphasis,
         };
       },
+    }),
+    showSkills: tool({
+      description:
+        "Render Ethan's skills, grouped. Pass `emphasis` (keywords or group ids relevant to this visitor) to highlight the most relevant groups; the rest recede.",
+      inputSchema: z.object({
+        emphasis: z.array(z.string()).default([]).describe("keywords/ids to highlight, e.g. ai, data"),
+      }),
+      execute: async ({ emphasis }) => ({ groups: getPublicSkills(), emphasis }),
     }),
   };
 }

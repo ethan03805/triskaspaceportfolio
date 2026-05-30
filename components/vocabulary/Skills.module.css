@@ -1,0 +1,6 @@
+.wrap { margin: 14px 0; }
+.group { padding: 7px 0; }
+.label { display: block; font-family: var(--font-mono), monospace; font-size: 11px; color: var(--text-tertiary); letter-spacing: 0.03em; margin-bottom: 3px; }
+.items { font-size: 13px; line-height: var(--leading-prose); }
+.on .items { color: var(--text); }
+.off .items { color: var(--text-tertiary); }

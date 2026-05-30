@@ -55,3 +55,15 @@ describe("showProjects tool", () => {
     expect(JSON.stringify(out)).not.toContain("Cost trick");
   });
 });
+
+describe("showSkills tool", () => {
+  it("returns all skill groups and passes emphasis through", async () => {
+    const tools = buildTools();
+    const out = (await tools.showSkills.execute!(
+      { emphasis: ["ai"] },
+      { toolCallId: "t", messages: [] } as never,
+    )) as InferToolOutput<Tools["showSkills"]>;
+    expect(out.groups.map((g) => g.id)).toContain("ai-ml");
+    expect(out.emphasis).toEqual(["ai"]);
+  });
+});
