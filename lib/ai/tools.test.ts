@@ -127,3 +127,25 @@ describe("showSerenity tool", () => {
     expect(JSON.stringify(out)).not.toContain("Cost trick");
   });
 });
+
+describe("showDiagram tool", () => {
+  it("returns a trimmed title and the mermaid source", async () => {
+    const tools = buildTools();
+    const out = (await tools.showDiagram.execute!(
+      { title: "  Flow  ", mermaid: "graph TD; A-->B" },
+      { toolCallId: "t", messages: [] } as never,
+    )) as InferToolOutput<Tools["showDiagram"]>;
+    expect(out.title).toBe("Flow");
+    expect(out.mermaid).toBe("graph TD; A-->B");
+  });
+  it("nulls an empty title and caps very long source", async () => {
+    const tools = buildTools();
+    const long = "graph TD;" + "A-->B;".repeat(2000);
+    const out = (await tools.showDiagram.execute!(
+      { mermaid: long },
+      { toolCallId: "t", messages: [] } as never,
+    )) as InferToolOutput<Tools["showDiagram"]>;
+    expect(out.title).toBeNull();
+    expect(out.mermaid.length).toBeLessThanOrEqual(4000);
+  });
+});

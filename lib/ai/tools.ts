@@ -97,6 +97,18 @@ export function buildTools() {
         directions: directions.map((d) => d.trim()).filter(Boolean).slice(0, 3),
       }),
     }),
+    showDiagram: tool({
+      description:
+        "Render a small diagram from Mermaid source (flowchart, sequence, simple graph). Use sparingly, only when a diagram genuinely clarifies a relationship or process. Keep it small.",
+      inputSchema: z.object({
+        title: z.string().optional().describe("short caption for the diagram"),
+        mermaid: z.string().min(1).describe("Mermaid diagram source, e.g. 'graph TD; A-->B'"),
+      }),
+      execute: async ({ title, mermaid }) => ({
+        title: title?.trim() ? title.trim() : null,
+        mermaid: mermaid.slice(0, 4000),
+      }),
+    }),
   };
 }
 export type Tools = ReturnType<typeof buildTools>;
