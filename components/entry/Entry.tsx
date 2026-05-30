@@ -41,7 +41,7 @@ export function Entry({ onDeclare }: { onDeclare: (d: Declaration) => void }) {
         <div className={styles.box}>
           <input
             className={styles.input}
-            placeholder="describe yourself — e.g. recruiter at a space company, GNC team"
+            placeholder="describe yourself, e.g. recruiter at a space company, GNC team"
             value={text}
             onChange={(e) => setText(e.target.value)}
             onKeyDown={(e) => { if (e.key === "Enter") submitText(); }}
