@@ -1,0 +1,7 @@
+.panel { opacity: 0; }
+.panel.go { animation: panelIn 0.4s ease-out forwards; }
+.line { opacity: 0; }
+.go .line { animation: lineIn 0.5s ease-out forwards; animation-delay: calc(0.16s + var(--i) * 0.14s); }
+@media (prefers-reduced-motion: reduce) {
+  .panel, .line { opacity: 1 !important; animation: none !important; }
+}
