@@ -26,6 +26,16 @@ export function buildTools() {
         return { project: publicProjectSchema.parse(project), emphasis };
       },
     }),
+    showSerenity: tool({
+      description:
+        "Render the live Serenity Radio component: the current track, on-air status, and an on-site player. Use this for Serenity Radio instead of showProject whenever the visitor asks about it or wants to listen.",
+      inputSchema: z.object({}),
+      execute: async () => {
+        const project = getPublicProjectById("serenity");
+        if (!project) throw new Error("serenity project missing");
+        return { project: publicProjectSchema.parse(project) };
+      },
+    }),
     showProjects: tool({
       description:
         "Render an overview of multiple projects. Pass `lead` (the id most relevant to this visitor) to feature it. Set `includeGated: true` only for aerospace or security visitors, or on direct request.",

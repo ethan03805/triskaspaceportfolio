@@ -114,3 +114,16 @@ describe("suggestDirections tool", () => {
     expect(out.directions).toEqual(["tell me about Axiom", "show his skills", "experience"]);
   });
 });
+
+describe("showSerenity tool", () => {
+  it("returns the serenity public project and never leaks private notes", async () => {
+    const tools = buildTools();
+    const out = (await tools.showSerenity.execute!(
+      {},
+      { toolCallId: "t", messages: [] },
+    )) as InferToolOutput<Tools["showSerenity"]>;
+    expect(out.project.id).toBe("serenity");
+    expect(out.project.name).toBe("Serenity Radio");
+    expect(JSON.stringify(out)).not.toContain("Cost trick");
+  });
+});
