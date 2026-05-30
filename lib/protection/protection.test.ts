@@ -13,4 +13,8 @@ describe("protection defaults", () => {
   it("always-pass verifier passes", async () => {
     expect((await new AlwaysPassVerifier().verify("anything")).ok).toBe(true);
   });
+  it("getVerifier returns a passing verifier by default", async () => {
+    const { getVerifier } = await import("./verifier");
+    expect((await getVerifier().verify("any-token")).ok).toBe(true);
+  });
 });
