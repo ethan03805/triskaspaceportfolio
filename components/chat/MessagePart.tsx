@@ -7,6 +7,7 @@ import { EducationComponent } from "@/components/vocabulary/Education";
 import { ContactComponent } from "@/components/vocabulary/Contact";
 import { SerenityComponent } from "@/components/vocabulary/Serenity";
 import { Skeleton } from "./Skeleton";
+import { Prose } from "./Prose";
 import { isLeakedToolIntent } from "@/lib/ai/leak-detect";
 import styles from "./MessagePart.module.css";
 
@@ -44,7 +45,7 @@ const TOOL_TYPES = new Set([
 export function MessagePart({ part }: { part: Part }) {
   if (part.type === "text") {
     if (!part.text || isLeakedToolIntent(part.text)) return null;
-    return <p>{part.text}</p>;
+    return <Prose>{part.text}</Prose>;
   }
   if (TOOL_TYPES.has(part.type)) {
     if (part.state === "output-available" && part.output) {

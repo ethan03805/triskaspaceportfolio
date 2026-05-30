@@ -30,6 +30,10 @@ describe("MessagePart", () => {
     render(<MessagePart part={{ type: "text", text: "Ethan built Serenity Radio." }} />);
     expect(screen.getByText(/Ethan built/)).toBeInTheDocument();
   });
+  it("renders markdown formatting in a text part", () => {
+    render(<MessagePart part={{ type: "text", text: "Ethan built **Serenity Radio**." }} />);
+    expect(screen.getByText("Serenity Radio").tagName).toBe("STRONG");
+  });
   it("renders the overview for tool-showProjects output-available", () => {
     const lead = { id: "axiom", name: "Axiom", tagline: "t", description: "d", tech: "go", year: "2026", status: "featured" as const, audienceTags: [] as string[] };
     render(<MessagePart part={{ type: "tool-showProjects", state: "output-available", output: { lead, others: [], gated: [], emphasis: [] } }} />);
