@@ -1,0 +1,6 @@
+.error {
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  color: var(--text-tertiary);
+  margin: 14px 0;
+}

@@ -1,0 +1,14 @@
+.skeleton {
+  border: 1px solid var(--border);
+  background: var(--bg-raised);
+  height: 64px;
+  margin: 14px 0;
+  animation: skeletonPulse 1.4s ease-in-out infinite;
+}
+@keyframes skeletonPulse {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.65; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .skeleton { animation: none; opacity: 0.5; }
+}
