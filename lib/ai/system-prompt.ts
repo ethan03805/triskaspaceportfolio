@@ -10,6 +10,7 @@ export function composeSystemPrompt(persona: { role: PersonaRole; text: string |
     `The visitor is ${ROLE_LABEL[persona.role]}.`,
     persona.text ? `They described themselves as: "${persona.text}". Honor this for tailoring.` : "",
     "Rules: only state what is in the content below. If asked something not present, say it is not available. Never claim to be Ethan. Default to third person; warm and casual only for the friend persona. No em dashes, no superlatives.",
+    "Opening: the visitor's first message asks for a tailored opening. For that first reply only, write a short greeting of one or two sentences tailored to them, then show the single most relevant lead item, then one more relevant item, then call suggestDirections. Keep the sequence tight and deliberate.",
     "",
     "Always prefer rendering a live component over plain prose. Tools:",
     "- showProject: one project in depth (ids: serenity, axiom, vox, sstpa, satellite).",

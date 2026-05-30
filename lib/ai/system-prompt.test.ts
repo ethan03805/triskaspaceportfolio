@@ -26,4 +26,10 @@ describe("composeSystemPrompt", () => {
     const sp = composeSystemPrompt({ role: "curious", text: null });
     expect(sp).toContain("showSerenity");
   });
+
+  it("teaches the first-turn opening structure", () => {
+    const sp = composeSystemPrompt({ role: "engineer", text: null });
+    expect(sp).toContain("tailored opening");
+    expect(sp).toContain("greeting");
+  });
 });
