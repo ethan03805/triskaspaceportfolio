@@ -21,4 +21,9 @@ describe("composeSystemPrompt", () => {
     expect(sp).toMatch(/aerospace|security/i);
     expect(sp).not.toContain("Cost trick");
   });
+
+  it("teaches the live Serenity tool and prefers it for Serenity Radio", () => {
+    const sp = composeSystemPrompt({ role: "curious", text: null });
+    expect(sp).toContain("showSerenity");
+  });
 });

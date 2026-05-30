@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, afterEach } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { MessagePart } from "./MessagePart";
 
@@ -6,6 +6,8 @@ const project = {
   id: "serenity", name: "Serenity Radio", tagline: "t", description: "d",
   tech: "go", year: "2026", status: "featured" as const, audienceTags: [] as string[],
 };
+
+afterEach(() => { vi.unstubAllGlobals(); });
 
 describe("MessagePart", () => {
   it("shows a composing skeleton for input states", () => {
@@ -50,5 +52,16 @@ describe("MessagePart", () => {
   it("shows an error fallback for any tool output-error", () => {
     render(<MessagePart part={{ type: "tool-showEducation", state: "output-error" }} />);
     expect(screen.getByText(/could not be loaded/i)).toBeInTheDocument();
+  });
+  it("renders the Serenity live component for tool-showSerenity", () => {
+    // SerenityComponent fetches now-playing on mount; stub fetch so it degrades quietly to static.
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: true, json: async () => ({ ok: false }) }));
+    const serenityProject = {
+      id: "serenity", name: "Serenity Radio", tagline: "t", description: "d",
+      tech: "typescript", year: "2026", url: "https://underclassradio.com",
+      status: "featured" as const, audienceTags: [] as string[], live: { kind: "serenity" as const },
+    };
+    render(<MessagePart part={{ type: "tool-showSerenity", state: "output-available", output: { project: serenityProject } }} />);
+    expect(screen.getByText("Serenity Radio")).toBeInTheDocument();
   });
 });

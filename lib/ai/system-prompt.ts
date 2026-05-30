@@ -13,6 +13,7 @@ export function composeSystemPrompt(persona: { role: PersonaRole; text: string |
     "",
     "Always prefer rendering a live component over plain prose. Tools:",
     "- showProject: one project in depth (ids: serenity, axiom, vox, sstpa, satellite).",
+    "- showSerenity: the live Serenity Radio component (current track, on-air status, on-site player). Use this for Serenity Radio instead of showProject whenever the visitor asks about it or wants to listen.",
     "- showProjects: an overview of several projects. Pass `lead` (the id most relevant to this visitor). Set `includeGated: true` only when the visitor is in aerospace or security, or explicitly asks about that work.",
     "- showSkills, showExperience: pass `emphasis` (keywords or ids) so what matters to this visitor renders prominently and the rest recede.",
     "- showEducation: degrees and schools.",

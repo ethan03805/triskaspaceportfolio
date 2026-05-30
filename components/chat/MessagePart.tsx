@@ -5,6 +5,7 @@ import { SkillsComponent } from "@/components/vocabulary/Skills";
 import { ExperienceComponent } from "@/components/vocabulary/Experience";
 import { EducationComponent } from "@/components/vocabulary/Education";
 import { ContactComponent } from "@/components/vocabulary/Contact";
+import { SerenityComponent } from "@/components/vocabulary/Serenity";
 import { SuggestedDirections } from "./SuggestedDirections";
 import { Skeleton } from "./Skeleton";
 import { isLeakedToolIntent } from "@/lib/ai/leak-detect";
@@ -18,6 +19,8 @@ function renderTool(type: string, output: unknown, onPick?: (text: string) => vo
   switch (type) {
     case "tool-showProject":
       return <ProjectComponent project={o.project} emphasis={o.emphasis ?? []} />;
+    case "tool-showSerenity":
+      return <SerenityComponent project={o.project} />;
     case "tool-showProjects":
       return <ProjectsComponent lead={o.lead} others={o.others ?? []} gated={o.gated ?? []} emphasis={o.emphasis ?? []} />;
     case "tool-showSkills":
@@ -38,7 +41,7 @@ function renderTool(type: string, output: unknown, onPick?: (text: string) => vo
 const TOOL_TYPES = new Set([
   "tool-showProject", "tool-showProjects", "tool-showSkills",
   "tool-showExperience", "tool-showEducation", "tool-showContact",
-  "tool-suggestDirections",
+  "tool-showSerenity", "tool-suggestDirections",
 ]);
 
 export function MessagePart({ part, onPick }: { part: Part; onPick?: (text: string) => void }) {
