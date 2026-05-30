@@ -24,4 +24,10 @@ describe("reasoning budget", () => {
   it("bounds reasoning to low effort so it cannot consume the whole budget", () => {
     expect(modelSettings().reasoning).toEqual({ effort: "low" });
   });
+
+  // OpenRouter's default routing can land on a Kimi K2.6 endpoint that is an
+  // order of magnitude slower; throughput routing keeps the opening snappy.
+  it("routes to the fastest endpoint by throughput", () => {
+    expect(modelSettings().provider).toEqual({ sort: "throughput" });
+  });
 });

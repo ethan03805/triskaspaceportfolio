@@ -32,9 +32,21 @@ export function openrouter() {
  * it would otherwise spend the entire output budget on reasoning tokens and
  * never emit visible text or a tool call (finishReason "length"); low effort
  * keeps reasoning to a small fraction of the budget so the answer gets produced.
+ *
+ * `provider.sort: "throughput"` routes to the fastest Kimi K2.6 endpoint.
+ * OpenRouter's default routing can land on an endpoint that is an order of
+ * magnitude slower, which is what made the reasoning-heavy opening crawl.
  */
-export function modelSettings(): { models: string[]; reasoning: { effort: "low" } } {
-  return { models: [...MODEL_CHAIN], reasoning: { effort: "low" } };
+export function modelSettings(): {
+  models: string[];
+  reasoning: { effort: "low" };
+  provider: { sort: "throughput" };
+} {
+  return {
+    models: [...MODEL_CHAIN],
+    reasoning: { effort: "low" },
+    provider: { sort: "throughput" },
+  };
 }
 
 /** The model to use for chat: primary slug + the full chain as OpenRouter fallback routing. */
