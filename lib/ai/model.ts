@@ -1,17 +1,13 @@
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 
 /**
- * Ordered fallback chain of OpenRouter model slugs.
+ * The OpenRouter model slug used for chat.
  *
- * The first entry is the default; subsequent entries are tried in order when
- * an upstream model errors or is unavailable. These slugs are provisional and
- * confirmed-at-deploy.
+ * Single-model by product decision: Kimi K2.6 only, no fallback chain. Kept as
+ * a one-element array so the request layer and any future re-expansion stay
+ * unchanged. The slug is confirmed-at-deploy.
  */
-export const MODEL_CHAIN = [
-  "moonshotai/kimi-k2.6",
-  "anthropic/claude-sonnet-4.6",
-  "google/gemini-3-pro-preview",
-] as const;
+export const MODEL_CHAIN = ["moonshotai/kimi-k2.6"] as const;
 
 /**
  * Construct an OpenRouter provider instance.
@@ -29,8 +25,8 @@ export function openrouter() {
 }
 
 /**
- * OpenRouter chat settings that enable server-side model fallback:
- * OpenRouter tries each slug in `models` in order, falling back on error/unavailability.
+ * OpenRouter chat settings. With a single model this carries just that slug;
+ * the `models` array stays so re-introducing fallback later is a one-line change.
  */
 export function modelSettings(): { models: string[] } {
   return { models: [...MODEL_CHAIN] };

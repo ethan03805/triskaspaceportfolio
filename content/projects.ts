@@ -8,7 +8,7 @@ export const projects: Project[] = [
     tagline: "An LLM-hosted 24/7 internet radio station.",
     description:
       "Serenity Radio is an autonomous internet radio station with no human staff. A language model selects tracks from a curated library, schedules shows, and replies to listener messages in real time. Listeners can send short notes and hear the AI host respond on air.",
-    tech: "typescript",
+    tech: "python",
     year: "2026",
     url: "https://underclassradio.com",
     status: "featured",

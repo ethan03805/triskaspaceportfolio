@@ -16,4 +16,12 @@ describe("projects content", () => {
     const others = projects.filter((p) => p.id !== "axiom");
     for (const o of others) expect(axiom.description.length).toBeGreaterThan(o.description.length);
   });
+  it("lists Serenity Radio's tech as python", () => {
+    const serenity = projects.find((p) => p.id === "serenity");
+    expect(serenity?.tech).toBe("python");
+  });
+  it("keeps Serenity's year at 2026", () => {
+    const serenity = projects.find((p) => p.id === "serenity");
+    expect(serenity?.year).toBe("2026");
+  });
 });
