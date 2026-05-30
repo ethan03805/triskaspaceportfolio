@@ -27,9 +27,14 @@ export function openrouter() {
 /**
  * OpenRouter chat settings. With a single model this carries just that slug;
  * the `models` array stays so re-introducing fallback later is a one-line change.
+ *
+ * `reasoning.effort: "low"` bounds Kimi K2.6's reasoning. As a reasoning model
+ * it would otherwise spend the entire output budget on reasoning tokens and
+ * never emit visible text or a tool call (finishReason "length"); low effort
+ * keeps reasoning to a small fraction of the budget so the answer gets produced.
  */
-export function modelSettings(): { models: string[] } {
-  return { models: [...MODEL_CHAIN] };
+export function modelSettings(): { models: string[]; reasoning: { effort: "low" } } {
+  return { models: [...MODEL_CHAIN], reasoning: { effort: "low" } };
 }
 
 /** The model to use for chat: primary slug + the full chain as OpenRouter fallback routing. */

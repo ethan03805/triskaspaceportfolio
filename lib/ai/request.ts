@@ -1,4 +1,8 @@
-export const MAX_OUTPUT_TOKENS = 1024;   // hard spend cap on every request
+// Hard spend cap on every request. Sized for a reasoning model: Kimi K2.6
+// emits reasoning tokens that count against this budget before any visible
+// text or tool call, so the cap must clear the reasoning phase with headroom
+// for the answer. Reasoning itself is bounded to low effort in `modelSettings`.
+export const MAX_OUTPUT_TOKENS = 2048;
 export const MAX_INPUT_CHARS = 4000;     // per-message input cap
 export const MAX_MESSAGES = 20;          // messages-per-session cap
 

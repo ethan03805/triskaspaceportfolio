@@ -16,3 +16,12 @@ describe("model fallback", () => {
     expect(primaryModel()).toBeTruthy();
   });
 });
+
+describe("reasoning budget", () => {
+  // Kimi K2.6 is a reasoning model: left unbounded it spends the whole output
+  // budget on reasoning tokens and never emits visible text or tool calls.
+  // Bounding reasoning to low effort keeps it from dominating the budget.
+  it("bounds reasoning to low effort so it cannot consume the whole budget", () => {
+    expect(modelSettings().reasoning).toEqual({ effort: "low" });
+  });
+});
