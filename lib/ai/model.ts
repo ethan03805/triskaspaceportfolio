@@ -28,23 +28,29 @@ export function openrouter() {
  * OpenRouter chat settings. With a single model this carries just that slug;
  * the `models` array stays so re-introducing fallback later is a one-line change.
  *
- * `reasoning.effort: "low"` bounds Kimi K2.6's reasoning. As a reasoning model
- * it would otherwise spend the entire output budget on reasoning tokens and
- * never emit visible text or a tool call (finishReason "length"); low effort
- * keeps reasoning to a small fraction of the budget so the answer gets produced.
+ * `reasoning.max_tokens` HARD-caps Kimi K2.6's reasoning. This must be a hard
+ * cap, not `effort`: the `effort` knob barely bounds Kimi on this rich prompt,
+ * so verbose personas (e.g. a hiring manager) reason past the whole output
+ * budget and the reply finishes with "length" before any visible text or tool
+ * call (a blank opening). A hard token cap forces the model to stop reasoning
+ * and produce the answer, with REASONING_MAX_TOKENS < MAX_OUTPUT_TOKENS so the
+ * answer always has room. Reasoning stays ON (a small budget) because with it
+ * fully OFF the model loops and re-emits the opening until the step cap.
  *
  * `provider.sort: "throughput"` routes to the fastest Kimi K2.6 endpoint.
  * OpenRouter's default routing can land on an endpoint that is an order of
  * magnitude slower, which is what made the reasoning-heavy opening crawl.
  */
+export const REASONING_MAX_TOKENS = 1024;
+
 export function modelSettings(): {
   models: string[];
-  reasoning: { effort: "low" };
+  reasoning: { max_tokens: number };
   provider: { sort: "throughput" };
 } {
   return {
     models: [...MODEL_CHAIN],
-    reasoning: { effort: "low" },
+    reasoning: { max_tokens: REASONING_MAX_TOKENS },
     provider: { sort: "throughput" },
   };
 }
