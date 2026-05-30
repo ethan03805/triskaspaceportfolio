@@ -1,0 +1,2 @@
+.header { height: 44px; display: flex; align-items: center; max-width: var(--max-col); margin: 0 auto; padding: 0 var(--pad-x); }
+.mark { font-family: var(--font-mono), monospace; font-size: 12px; letter-spacing: 0.04em; color: var(--text-tertiary); }
