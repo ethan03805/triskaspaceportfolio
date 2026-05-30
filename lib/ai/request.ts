@@ -6,7 +6,10 @@ export function buildModelParams() {
   return { maxOutputTokens: MAX_OUTPUT_TOKENS } as const;
 }
 
-type Msg = { role: string; content: unknown; id?: string };
+// `content` is optional so this also accepts AI SDK UIMessage[] (whose text
+// lives in `parts`, not `content`); for those the truncation branch is a no-op
+// and only the messages-per-session cap applies.
+type Msg = { role: string; content?: unknown; id?: string };
 
 export function capMessages<T extends Msg>(messages: T[]): T[] {
   const recent = messages.slice(-MAX_MESSAGES);
