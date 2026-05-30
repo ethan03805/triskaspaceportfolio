@@ -6,6 +6,7 @@ import { ExperienceComponent } from "@/components/vocabulary/Experience";
 import { EducationComponent } from "@/components/vocabulary/Education";
 import { ContactComponent } from "@/components/vocabulary/Contact";
 import { SerenityComponent } from "@/components/vocabulary/Serenity";
+import { DiagramComponent } from "@/components/vocabulary/Diagram";
 import { Skeleton } from "./Skeleton";
 import { Prose } from "./Prose";
 import { isLeakedToolIntent } from "@/lib/ai/leak-detect";
@@ -31,6 +32,8 @@ function renderTool(type: string, output: unknown) {
       return <EducationComponent entries={o.entries ?? []} />;
     case "tool-showContact":
       return <ContactComponent email={o.email} resumeUrl={o.resumeUrl} links={o.links ?? []} />;
+    case "tool-showDiagram":
+      return <DiagramComponent title={o.title ?? null} mermaid={o.mermaid} />;
     default:
       return null;
   }
@@ -39,7 +42,7 @@ function renderTool(type: string, output: unknown) {
 const TOOL_TYPES = new Set([
   "tool-showProject", "tool-showProjects", "tool-showSkills",
   "tool-showExperience", "tool-showEducation", "tool-showContact",
-  "tool-showSerenity",
+  "tool-showSerenity", "tool-showDiagram",
 ]);
 
 export function MessagePart({ part }: { part: Part }) {

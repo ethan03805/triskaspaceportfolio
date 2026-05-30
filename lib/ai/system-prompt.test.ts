@@ -32,4 +32,13 @@ describe("composeSystemPrompt", () => {
     expect(sp).toContain("tailored opening");
     expect(sp).toContain("greeting");
   });
+
+  it("documents the showDiagram tool", () => {
+    const prompt = composeSystemPrompt({ role: "curious", text: null });
+    expect(prompt).toContain("showDiagram");
+  });
+  it("allows markdown for prose answers", () => {
+    const prompt = composeSystemPrompt({ role: "curious", text: null });
+    expect(prompt.toLowerCase()).toContain("markdown");
+  });
 });

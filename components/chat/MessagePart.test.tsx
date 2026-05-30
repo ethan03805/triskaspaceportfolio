@@ -2,6 +2,10 @@ import { describe, it, expect, vi, afterEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { MessagePart } from "./MessagePart";
 
+vi.mock("mermaid", () => ({
+  default: { initialize: vi.fn(), render: vi.fn().mockResolvedValue({ svg: "<svg></svg>" }) },
+}));
+
 const project = {
   id: "serenity", name: "Serenity Radio", tagline: "t", description: "d",
   tech: "go", year: "2026", status: "featured" as const, audienceTags: [] as string[],
@@ -67,5 +71,13 @@ describe("MessagePart", () => {
     };
     render(<MessagePart part={{ type: "tool-showSerenity", state: "output-available", output: { project: serenityProject } }} />);
     expect(screen.getByText("Serenity Radio")).toBeInTheDocument();
+  });
+  it("renders the diagram for tool-showDiagram output-available", () => {
+    render(
+      <MessagePart
+        part={{ type: "tool-showDiagram", state: "output-available", output: { title: "Flow", mermaid: "graph TD; A-->B" } }}
+      />,
+    );
+    expect(screen.getByText("Flow")).toBeInTheDocument();
   });
 });
