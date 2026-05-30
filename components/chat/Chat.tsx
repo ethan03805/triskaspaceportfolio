@@ -2,15 +2,14 @@
 import { useState } from "react";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
-import { Entry, type Declaration } from "@/components/entry/Entry";
-import { Input } from "./Input";
-import { MessagePart } from "./MessagePart";
+import { Conversation } from "./Conversation";
+import { type Declaration } from "@/components/entry/Entry";
 import { TINTS } from "@/lib/persona";
-import styles from "./Chat.module.css";
+import { type TranscriptMessage } from "@/lib/chat/transcript";
 
 export function Chat() {
   const [persona, setPersona] = useState<Declaration | null>(null);
-  const { messages, sendMessage } = useChat({
+  const { messages, sendMessage, status } = useChat({
     transport: new DefaultChatTransport({ api: "/api/chat" }),
   });
 
@@ -23,18 +22,15 @@ export function Chat() {
     sendMessage({ text: opener }, { body: { persona: { role: d.role, text: d.text } } });
   };
 
-  if (!persona) return <Entry onDeclare={declare} />;
+  const send = (text: string) => sendMessage({ text }, { body: { persona } });
 
   return (
-    <div className={styles.chat}>
-      {messages.map((m) => (
-        <div key={m.id} className={m.role === "user" ? styles.user : styles.assistant}>
-          {m.parts.map((part, i) => (
-            <MessagePart key={i} part={part as never} />
-          ))}
-        </div>
-      ))}
-      <Input onSend={(text) => sendMessage({ text }, { body: { persona } })} />
-    </div>
+    <Conversation
+      persona={persona}
+      messages={messages}
+      status={status}
+      onDeclare={declare}
+      onSend={send}
+    />
   );
 }
