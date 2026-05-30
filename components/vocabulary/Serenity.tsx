@@ -51,7 +51,7 @@ export function SerenityComponent({ project }: { project: RenderProject }) {
     <Composed className={styles.card}>
       <div className={styles.title}>{p.name}</div>
       <div className={styles.tagline}>{np?.tagline ?? p.tagline}</div>
-      <div className={styles.body}>
+      <div>
         {showStatic ? (
           <>
             <div className={styles.desc}>{p.description}</div>
