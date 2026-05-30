@@ -1,7 +1,11 @@
 import "server-only";
 import { tool } from "ai";
 import { z } from "zod";
-import { getPublicProjectById } from "@/content/index";
+import {
+  getPublicProjectById,
+  getFeaturedPublicProjects,
+  getGatedPublicProjects,
+} from "@/content/index";
 import { publicProjectSchema } from "@/content/schema";
 
 export function buildTools() {
@@ -16,6 +20,31 @@ export function buildTools() {
         const project = getPublicProjectById(id);
         if (!project) throw new Error(`unknown project: ${id}`);
         return { project: publicProjectSchema.parse(project), emphasis };
+      },
+    }),
+    showProjects: tool({
+      description:
+        "Render an overview of multiple projects. Pass `lead` (the id most relevant to this visitor) to feature it. Set `includeGated: true` only for aerospace or security visitors, or on direct request.",
+      inputSchema: z.object({
+        lead: z.string().optional().describe("id of the project to feature, e.g. axiom"),
+        includeGated: z
+          .boolean()
+          .default(false)
+          .describe("surface gated projects (aerospace/security relevance only)"),
+        emphasis: z.array(z.string()).default([]).describe("optional keywords to highlight"),
+      }),
+      execute: async ({ lead, includeGated, emphasis }) => {
+        const featured = getFeaturedPublicProjects();
+        const leadProject =
+          (lead ? getPublicProjectById(lead) : undefined) ?? featured[0];
+        const others = featured.filter((p) => p.id !== leadProject.id);
+        const gated = includeGated ? getGatedPublicProjects() : [];
+        return {
+          lead: publicProjectSchema.parse(leadProject),
+          others: others.map((p) => publicProjectSchema.parse(p)),
+          gated: gated.map((p) => publicProjectSchema.parse(p)),
+          emphasis,
+        };
       },
     }),
   };
